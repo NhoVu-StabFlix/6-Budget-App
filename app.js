@@ -42,7 +42,11 @@ var budgetController = (function() {
     //Calculate Percentage Expense
     Expense.prototype.calcPercentage = function(totalIncome) {
 
-            this.percentage = Math.round((this.value / totalIncome) * 100);
+            if (totalIncome > 0) {
+                this.percentage = Math.round((this.value / totalIncome) * 100);
+            } else {
+                this.percentage = -1;
+            }
 
         }
         // return Percentage Expense 
@@ -116,18 +120,13 @@ var budgetController = (function() {
 
         },
         getPercentages: function() {
-
             var allPerc = data.allItems.exp.map(function(cur) {
                 return cur.getPercentage();
-
-            })
+            });
             return allPerc;
 
+        },
 
-
-        }
-
-        ,
         // Test Data structure
         testing: function() {
             console.log(data);
@@ -295,11 +294,11 @@ var controller = (function(budgetCtrl, UICtrl) {
 
 
         //2.Read Percentage from the budgetController
-        budgetCtrl.getPercentages();
+        budgetCtrl.getPercentage();
 
 
         //3 Update pUI with new percentage
-        console.log(budgetCtrl.getPercentages.allPerc);
+        ;
 
 
 
